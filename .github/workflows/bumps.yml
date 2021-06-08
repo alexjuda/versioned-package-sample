@@ -1,11 +1,17 @@
 name: Bumps
-on: [push]
+on: 
+  workflow_dispatch:
+    inputs:
+      new_version: 
+        description: New project version. Defaults to bumping minor version.
+        required: false
 jobs:
   read-version-and-print:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
+      # - uses: ./.github/actions/my-action
       - run: |
           VERSION_PATH="${{ github.workspace }}/VERSION"
           echo "version path: $VERSION_PATH"
@@ -17,6 +23,7 @@ jobs:
           DEV=$(sed -r 's/^([0-9]+)\.([0-9]+)\.([0-9]+)(-.+)?$/\4/' $VERSION_PATH)
           echo "current version is $MAJOR.$MINOR.$PATCH.$DEV"
           BUMPED="$MAJOR.$(expr $MINOR + 1).$PATCH"
+          BUMPED=${${{ github.event.inputs.new_version }}:=BUMPED}
           echo "after the bump this will be $BUMPED"
           echo $BUMPED > $VERSION_PATH
 
