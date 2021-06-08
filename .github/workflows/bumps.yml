@@ -5,8 +5,9 @@ on:
       new_version: 
         description: New project version. Defaults to bumping minor version.
         required: false
+        default: "1.2.3"
 jobs:
-  read-version-and-print:
+  commit-version:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
