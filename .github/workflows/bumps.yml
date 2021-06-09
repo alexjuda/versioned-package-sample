@@ -30,6 +30,8 @@ jobs:
             NEW_VERSION="$MAJOR.$(expr $MINOR + 1).$PATCH"
           fi
 
+          echo "inferred version '$NEW_VERSION'"
+
           # special github syntax for setting step outputs
           # see https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
           echo "::set-output name=NEW_VERSION::$NEW_VERSION"
