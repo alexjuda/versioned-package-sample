@@ -34,7 +34,7 @@ jobs:
           # see https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
           echo "::set-output name=new_version::$NEW_VERSION"
 
-      - name: Commit & push bumped version
+      - name: Commit, tag & push the bumped version
         run: |
           NEW_VERSION="${{steps.infer-new-version.outputs.new_version}}"
           echo "after the bump this will be '$NEW_VERSION'"
@@ -47,3 +47,6 @@ jobs:
           git add $VERSION_PATH
           git commit -m "Bump version"
           git push
+
+          git tag "$NEW_VERSION"
+          git push --tags
