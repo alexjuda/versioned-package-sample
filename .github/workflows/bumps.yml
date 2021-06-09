@@ -32,11 +32,11 @@ jobs:
 
           # special github syntax for setting step outputs
           # see https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
-          echo "::set-output name=new_version::$NEW_VERSION"
+          echo "::set-output name=NEW_VERSION::$NEW_VERSION"
 
       - name: Commit & push bumped version
         run: |
-          NEW_VERSION="${{ github.event.inputs.new_version }}"
+          NEW_VERSION="${INPUT_NEW_VERSION}"
           echo "after the bump this will be $NEW_VERSION"
           VERSION_PATH="${{ github.workspace }}/VERSION"
           echo $NEW_VERSION > $VERSION_PATH
