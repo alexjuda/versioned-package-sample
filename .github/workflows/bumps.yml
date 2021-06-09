@@ -6,11 +6,12 @@ on:
         description: Manually selected new project version. If not passed, the workflow will read current version and bump the minor.
         required: false
 jobs:
-  commit-version:
+  bump-version:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
+
       - name: Infer new version
         run: |
           MANUAL_VERSION="${{ github.event.inputs.manual_version }}"
@@ -33,3 +34,15 @@ jobs:
           # see https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
           echo "::set-output name=new_version::$NEW_VERSION"
 
+      - name: Commit & push bumped version
+        run: |
+          NEW_VERSION="${{ github.event.inputs.new_version }}"
+          echo "after the bump this will be $NEW_VERSION"
+          VERSION_PATH="${{ github.workspace }}/VERSION"
+          echo $NEW_VERSION > $VERSION_PATH
+
+          git config --local user.email "action@github.com"
+          git config --local user.name "Github Action on behalf of ${{ github.actor }}"
+          git add $VERSION_PATH
+          git commit -m "Bump version"
+          git push
