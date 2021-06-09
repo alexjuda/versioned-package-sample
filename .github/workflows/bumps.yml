@@ -12,11 +12,13 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
 
-      - id: infer-new-version
+      - name: Infer new version
+        id: infer-new-version
         run: |
           MANUAL_VERSION="${{ github.event.inputs.manual_version }}"
           if [ -n "$MANUAL_VERSION" ]; then
             NEW_VERSION="$MANUAL_VERSION"
+            echo "using manually provided $NEW_VERSION"
           else
             VERSION_PATH="${{ github.workspace }}/VERSION"
 
@@ -25,13 +27,9 @@ jobs:
             PATCH=$(sed -r 's/^([0-9]+)\.([0-9]+)\.([0-9]+)(-.+)?$/\3/' $VERSION_PATH)
             DEV=$(sed -r 's/^([0-9]+)\.([0-9]+)\.([0-9]+)(-.+)?$/\4/' $VERSION_PATH)
 
-            echo "current version is $MAJOR.$MINOR.$PATCH$DEV"
-
             NEW_VERSION="$MAJOR.$(expr $MINOR + 1).$PATCH"
+            echo "using $NEW_VERSION bumped from $MAJOR.$MINOR.$PATCH$DEV"
           fi
-
-          echo "inferred version '$NEW_VERSION'"
-
           # special github syntax for setting step outputs
           # see https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
           echo "::set-output name=new_version::$NEW_VERSION"
