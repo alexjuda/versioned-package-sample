@@ -1,5 +1,6 @@
-name: version-bumper
+name: version-bumper-v2
 on: 
+  push:
   workflow_dispatch:
     inputs:
       manual_version: 
@@ -34,19 +35,20 @@ jobs:
           # see https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
           echo "::set-output name=new_version::$NEW_VERSION"
 
-      - name: Commit, tag & push the bumped version
-        run: |
-          NEW_VERSION="${{steps.infer-new-version.outputs.new_version}}"
-          echo "after the bump the version will be '$NEW_VERSION'"
+#       - name: Commit, tag & push the bumped version
+#         run: |
+#           NEW_VERSION="${{steps.infer-new-version.outputs.new_version}}"
+#           echo "after the bump the version will be '$NEW_VERSION'"
 
-          VERSION_PATH="${{ github.workspace }}/VERSION"
-          echo $NEW_VERSION > $VERSION_PATH
+#           VERSION_PATH="${{ github.workspace }}/VERSION"
+#           echo $NEW_VERSION > $VERSION_PATH
 
-          git config --local user.email "action@github.com"
-          git config --local user.name "Github Action on behalf of ${{ github.actor }}"
-          git add $VERSION_PATH
-          git commit -m "Bump version"
-          git push
+#           git config --local user.email "action@github.com"
+#           git config --local user.name "Github Action on behalf of ${{ github.actor }}"
+#           git add $VERSION_PATH
+#           git commit -m "Bump version"
+#           git push
 
-          git tag "alexj-$NEW_VERSION"
-          git push --tags
+#           git tag "alexj-$NEW_VERSION"
+#           git push --tags
+
