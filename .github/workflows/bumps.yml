@@ -37,7 +37,7 @@ jobs:
       - name: Commit, tag & push the bumped version
         run: |
           NEW_VERSION="${{steps.infer-new-version.outputs.new_version}}"
-          echo "after the bump this will be '$NEW_VERSION'"
+          echo "after the bump the version will be '$NEW_VERSION'"
 
           VERSION_PATH="${{ github.workspace }}/VERSION"
           echo $NEW_VERSION > $VERSION_PATH
