@@ -48,5 +48,5 @@ jobs:
           git commit -m "Bump version"
           git push
 
-          git tag "$NEW_VERSION"
+          git tag "alexj-$NEW_VERSION"
           git push --tags
