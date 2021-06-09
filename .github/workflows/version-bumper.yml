@@ -1,4 +1,4 @@
-name: Bumps-v2
+name: version-bumper
 on: 
   workflow_dispatch:
     inputs:
