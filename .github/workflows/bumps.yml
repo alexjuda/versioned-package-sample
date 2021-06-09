@@ -38,11 +38,12 @@ jobs:
         run: |
           NEW_VERSION="${{steps.infer-new-version.outputs.new_version}}"
           echo "after the bump this will be '$NEW_VERSION'"
-          # VERSION_PATH="${{ github.workspace }}/VERSION"
-          # echo $NEW_VERSION > $VERSION_PATH
 
-          # git config --local user.email "action@github.com"
-          # git config --local user.name "Github Action on behalf of ${{ github.actor }}"
-          # git add $VERSION_PATH
-          # git commit -m "Bump version"
-          # git push
+          VERSION_PATH="${{ github.workspace }}/VERSION"
+          echo $NEW_VERSION > $VERSION_PATH
+
+          git config --local user.email "action@github.com"
+          git config --local user.name "Github Action on behalf of ${{ github.actor }}"
+          git add $VERSION_PATH
+          git commit -m "Bump version"
+          git push
