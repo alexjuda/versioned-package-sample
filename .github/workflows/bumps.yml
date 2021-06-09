@@ -37,12 +37,12 @@ jobs:
       - name: Commit & push bumped version
         run: |
           NEW_VERSION="${INPUT_NEW_VERSION}"
-          echo "after the bump this will be $NEW_VERSION"
-          VERSION_PATH="${{ github.workspace }}/VERSION"
-          echo $NEW_VERSION > $VERSION_PATH
+          echo "after the bump this will be '$NEW_VERSION'"
+          # VERSION_PATH="${{ github.workspace }}/VERSION"
+          # echo $NEW_VERSION > $VERSION_PATH
 
-          git config --local user.email "action@github.com"
-          git config --local user.name "Github Action on behalf of ${{ github.actor }}"
-          git add $VERSION_PATH
-          git commit -m "Bump version"
-          git push
+          # git config --local user.email "action@github.com"
+          # git config --local user.name "Github Action on behalf of ${{ github.actor }}"
+          # git add $VERSION_PATH
+          # git commit -m "Bump version"
+          # git push
